@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { useEffect } from 'react';
 
 import AttributeGrid from '../components/AttributeGrid';
 import Container from '../components/Container';
@@ -25,8 +26,40 @@ const IndexPage = () => {
     navigate('/shop');
   };
 
+  // Initialize Dynamic Mockups
+  useEffect(() => {
+    const script = document.createElement('script');
+    script.src = 'https://cdn.jsdelivr.net/npm/@dynamic-mockups/mockup-editor-sdk@latest/dist/index.js';
+    script.async = true;
+    document.head.appendChild(script);
+
+    script.onload = () => {
+      if (window.DynamicMockups) {
+        window.DynamicMockups.initDynamicMockupsIframe({
+          iframeId: "dm-iframe",
+          data: { "x-website-key": "XkS30AJiv4ro" },
+          mode: "download",
+        });
+      }
+    };
+
+    return () => {
+      document.head.removeChild(script);
+    };
+  }, []);
+
   return (
     <Layout disablePaddingBottom>
+      {/* Mockup Generator */}
+      <div style={{ width: '100%', height: '90vh', marginBottom: '40px' }}>
+        <iframe
+          id="dm-iframe"
+          src="https://embed.dynamicmockups.com"
+          style={{ width: '100%', height: '100%', border: 'none' }}
+          title="Mockup Generator"
+        />
+      </div>
+
       {/* Hero Container */}
       <Hero
         maxWidth={'500px'}
@@ -101,7 +134,7 @@ const IndexPage = () => {
         bgColor={'var(--standard-light-grey)'}
         title={'about Sydney'}
         quote={
-          '“We believe in two things: the pursuit of quality in everything we do, and looking after one another. Everything else should take care of itself.”'
+          '"We believe in two things: the pursuit of quality in everything we do, and looking after one another. Everything else should take care of itself."'
         }
       />
 
@@ -119,7 +152,7 @@ const IndexPage = () => {
           image={toOptimizedImage('/banner3.png')}
           title={'We are Sustainable'}
           subtitle={
-            'From caring for our land to supporting our people, discover the steps we’re taking to do more for the world around us.'
+            'From caring for our land to supporting our people, discover the steps we're taking to do more for the world around us.'
           }
           ctaText={'read more'}
           maxWidth={'660px'}
