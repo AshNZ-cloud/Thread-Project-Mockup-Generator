@@ -27,13 +27,15 @@ const IndexPage = () => {
   };
 
   useEffect(() => {
+    // Load the SDK script
     const script = document.createElement('script');
     script.src = 'https://cdn.jsdelivr.net/npm/@dynamic-mockups/mockup-editor-sdk@latest/dist/index.js';
-    script.async = true;
-    document.head.appendChild(script);
+    script.async = false; // Changed to false to ensure it loads before init
+    document.body.appendChild(script);
 
     script.onload = () => {
-      if (window.DynamicMockups) {
+      // Initialize after script loads
+      if (window.DynamicMockups && window.DynamicMockups.initDynamicMockupsIframe) {
         window.DynamicMockups.initDynamicMockupsIframe({
           iframeId: "dm-iframe",
           data: { "x-website-key": "XkS30AJiv4ro" },
@@ -43,14 +45,15 @@ const IndexPage = () => {
     };
 
     return () => {
-      if (document.head.contains(script)) {
-        document.head.removeChild(script);
+      if (document.body.contains(script)) {
+        document.body.removeChild(script);
       }
     };
   }, []);
 
   return (
     <Layout disablePaddingBottom>
+      {/* Mockup Generator */}
       <div style={{ width: '100%', height: '90vh', marginBottom: '40px' }}>
         <iframe
           id="dm-iframe"
@@ -140,28 +143,3 @@ const IndexPage = () => {
         <Hero
           image={toOptimizedImage('/banner3.png')}
           title={'We are Sustainable'}
-          subtitle={'From caring for our land to supporting our people, discover the steps we\'re taking to do more for the world around us.'}
-          ctaText={'read more'}
-          maxWidth={'660px'}
-          ctaStyle={styles.ctaCustomButton}
-        />
-      </div>
-
-      <div className={styles.socialContainer}>
-        <Title
-          name={'Styled by You'}
-          subtitle={'Tag @sydney to be featured.'}
-        />
-        <div className={styles.socialContentGrid}>
-          <img src={toOptimizedImage('/social/socialMedia1.png')} alt={'social media 1'} />
-          <img src={toOptimizedImage('/social/socialMedia2.png')} alt={'social media 2'} />
-          <img src={toOptimizedImage('/social/socialMedia3.png')} alt={'social media 3'} />
-          <img src={toOptimizedImage('/social/socialMedia4.png')} alt={'social media 4'} />
-        </div>
-      </div>
-      <AttributeGrid />
-    </Layout>
-  );
-};
-
-export default IndexPage;
