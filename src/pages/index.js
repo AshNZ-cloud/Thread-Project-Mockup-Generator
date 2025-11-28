@@ -42,6 +42,22 @@ const IndexPage = () => {
     };
   }, []);
 
+  useEffect(() => {
+    const style = document.createElement('style');
+    style.innerHTML = `
+      header, nav {
+        display: none !important;
+      }
+    `;
+    document.head.appendChild(style);
+    
+    return () => {
+      if (document.head.contains(style)) {
+        document.head.removeChild(style);
+      }
+    };
+  }, []);
+
   return (
     <Layout disablePaddingBottom>
       <div style={{ width: '100%', height: '90vh', marginBottom: '40px' }}>
