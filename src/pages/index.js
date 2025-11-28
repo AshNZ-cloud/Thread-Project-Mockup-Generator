@@ -35,7 +35,7 @@ const IndexPage = () => {
       if (window.DynamicMockups) {
         window.DynamicMockups.initDynamicMockupsIframe({
           iframeId: "dm-iframe",
-          data: { "x-website-key": "XkS30AJiv4ro" },
+          data: { "x-website-key": "FqeyvdPEPxA7" },
           mode: "download",
         });
       }
